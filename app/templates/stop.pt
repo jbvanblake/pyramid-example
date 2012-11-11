@@ -1,0 +1,3 @@
+the current route is ${route_number}
+the bus number is ${bus_number}
+the stop number is ${stop_number}
