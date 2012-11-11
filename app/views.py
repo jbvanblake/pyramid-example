@@ -6,6 +6,8 @@ from sqlalchemy.exc import DBAPIError
 from .models import (
     DBSession,
     MyModel,
+    Route,
+    Stop,
     )
 
 @view_config(route_name='home', renderer='templates/mytemplate.pt')
@@ -33,9 +35,6 @@ try it again.
 """
 @view_config(route_name='route', renderer='templates/route.pt')
 def route_view(request):
-    route_number = request.matchdict['route_number']
-    new_model = MyModel(route_number, 'route')
-    DBSession.add(new_model)
     return {'route_number': request.matchdict['route_number']}
 
 @view_config(route_name='bus', renderer='templates/bus.pt')
@@ -45,6 +44,13 @@ def bus_view(request):
 
 @view_config(route_name='stop', renderer='templates/stop.pt')
 def stop_view(request):
+    route_number = request.matchdict['route_number']
+    new_route = Route(route_number)
+    DBSession.add(new_route)
+
+    stop_number = request.matchdict['stop_number']
+    new_stop = Stop(stop_number)
+    DBSession.add(new_stop)
     return {'route_number': request.matchdict['route_number'],
             'bus_number': request.matchdict['bus_number'],
             'stop_number': request.matchdict['stop_number']}
