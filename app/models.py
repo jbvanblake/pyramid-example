@@ -45,5 +45,6 @@ class Stop(Base):
     route_id = Column(Integer, ForeignKey("routes.route_id"))
     route = relationship('Route', backref=backref('routes', order_by=route_id))
 
-    def __init__(self, route_number):
-        self.stop_number = route_number
+    def __init__(self, stop_number, route_id):
+        self.stop_number = stop_number
+        self.route_id = route_id

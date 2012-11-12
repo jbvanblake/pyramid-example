@@ -47,9 +47,10 @@ def stop_view(request):
     route_number = request.matchdict['route_number']
     new_route = Route(route_number)
     DBSession.add(new_route)
+    DBSession.flush()
 
     stop_number = request.matchdict['stop_number']
-    new_stop = Stop(stop_number)
+    new_stop = Stop(stop_number, new_route.route_id)
     DBSession.add(new_stop)
     return {'route_number': request.matchdict['route_number'],
             'bus_number': request.matchdict['bus_number'],
